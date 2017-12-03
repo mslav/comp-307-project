@@ -1,0 +1,32 @@
+.divTable{
+	display: table;
+}
+.divTableRow {
+	display: table-row;
+}
+
+.divTableHead {
+	background-color: #EEE;
+	display: table-header-group;
+	font-weight: bold;
+}
+.divTableFoot {
+	background-color: #EEE;
+	display: table-footer-group;
+	font-weight: bold;
+}
+.divTableBody {
+	display: table-row-group;
+}
+
+.divTableHeading {
+	border: 1px solid #999999;
+	display: table-cell;
+	width: 40px;
+}
+
+.divTableCell {
+	border: 1px solid #999999;
+	display: table-cell;
+}
+
