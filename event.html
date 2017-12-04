@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Online Meeting Planner</title>
+	<link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16x16.png">
+	<link rel="manifest" href="/icons/manifest.json">
+	<link rel="mask-icon" href="/icons/safari-pinned-tab.svg" color="#5bbad5">
+	<meta name="msapplication-config" content="/icons/browserconfig.xml">
+	<meta name="theme-color" content="#ffffff">
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<script src="jquery-3.2.1.min.js"></script>
+</head>
+
+<body>
+	<h1>Online Meeting Planner</h1>
+	<script>
+		function changeColor(id) {
+			var selected = document.getElementById(id).getAttribute("data-selected");
+			if (selected==="false") {
+				document.getElementById(id).style.background="green";
+				document.getElementById(id).setAttribute("data-selected", "true");
+			} else {
+				document.getElementById(id).style.background="white";
+				document.getElementById(id).setAttribute("data-selected", "false");
+			}
+		}
+		
+
+		
+	</script>
+	<div class="divTable" style="float: left; margin-right: 50px">
+		<div class="divTableHead">
+			<div class="divTableRow">
+				<div class="divTableHeading">Sun</div>
+				<div class="divTableHeading">Mon</div>
+				<div class="divTableHeading">Tue</div>
+				<div class="divTableHeading">Wed</div>
+				<div class="divTableHeading">Thu</div>
+				<div class="divTableHeading">Fri</div>
+				<div class="divTableHeading">Sat</div>
+			</div>
+		</div>
+		<div class="divTableBody">
+			<div class="divTableRow">
+				<div class="divTableCell" id="sun0900" data-selected="false" onmousedown="changeColor(this.id)">0900</div>
+				<div class="divTableCell" id="mon0900" data-selected="false" onmousedown="changeColor(this.id)"></div>
+				<div class="divTableCell" id="tue0900" data-selected="false" onmousedown="changeColor(this.id)"></div>
+				<div class="divTableCell" id="wed0900" data-selected="false" onmousedown="changeColor(this.id)"></div>
+				<div class="divTableCell" id="thu0900" data-selected="false" onmousedown="changeColor(this.id)"></div>
+				<div class="divTableCell" id="fri0900" data-selected="false" onmousedown="changeColor(this.id)"></div>
+				<div class="divTableCell" id="sat0900" data-selected="false" onmousedown="changeColor(this.id)"></div>
+			</div>
+			<div class="divTableRow">
+				<div class="divTableCell" id="sun0930" data-selected="false" onmousedown="changeColor(this.id)">0930</div>
+				<div class="divTableCell" id="mon0930" data-selected="false" onmousedown="changeColor(this.id)"></div>
+				<div class="divTableCell" id="tue0930" data-selected="false" onmousedown="changeColor(this.id)"></div>
+				<div class="divTableCell" id="wed0930" data-selected="false" onmousedown="changeColor(this.id)"></div>
+				<div class="divTableCell" id="thu0930" data-selected="false" onmousedown="changeColor(this.id)"></div>
+				<div class="divTableCell" id="fri0930" data-selected="false" onmousedown="changeColor(this.id)"></div>
+				<div class="divTableCell" id="sat0930" data-selected="false" onmousedown="changeColor(this.id)"></div>
+			</div>
+			<div class="divTableRow">
+				<div class="divTableCell" id="sun1000" data-selected="false" onmousedown="changeColor(this.id)">1000</div>
+				<div class="divTableCell" id="mon1000" data-selected="false" onmousedown="changeColor(this.id)"></div>
+				<div class="divTableCell" id="tue1000" data-selected="false" onmousedown="changeColor(this.id)"></div>
+				<div class="divTableCell" id="wed1000" data-selected="false" onmousedown="changeColor(this.id)"></div>
+				<div class="divTableCell" id="thu1000" data-selected="false" onmousedown="changeColor(this.id)"></div>
+				<div class="divTableCell" id="fri1000" data-selected="false" onmousedown="changeColor(this.id)"></div>
+				<div class="divTableCell" id="sat1000" data-selected="false" onmousedown="changeColor(this.id)"></div>
+			</div>
+			<div class="divTableRow">
+				<div class="divTableCell" id="sun1030" data-selected="false" onmousedown="changeColor(this.id)">1030</div>
+				<div class="divTableCell" id="mon1030" data-selected="false" onmousedown="changeColor(this.id)"></div>
+				<div class="divTableCell" id="tue1030" data-selected="false" onmousedown="changeColor(this.id)"></div>
+				<div class="divTableCell" id="wed1030" data-selected="false" onmousedown="changeColor(this.id)"></div>
+				<div class="divTableCell" id="thu1030" data-selected="false" onmousedown="changeColor(this.id)"></div>
+				<div class="divTableCell" id="fri1030" data-selected="false" onmousedown="changeColor(this.id)"></div>
+				<div class="divTableCell" id="sat1030" data-selected="false" onmousedown="changeColor(this.id)"></div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="divTable" style="float: left">
+		<div class="divTableHead">
+			<div class="divTableRow">
+				<div class="divTableHeading">Sun</div>
+				<div class="divTableHeading">Mon</div>
+				<div class="divTableHeading">Tue</div>
+				<div class="divTableHeading">Wed</div>
+				<div class="divTableHeading">Thu</div>
+				<div class="divTableHeading">Fri</div>
+				<div class="divTableHeading">Sat</div>
+			</div>
+		</div>
+		<div class="divTableBody">
+			<div class="divTableRow">
+				<div class="divTableCell" id="groupAvailability0">0900</div>
+				<div class="divTableCell" id="groupAvailability1"></div>
+				<div class="divTableCell" id="groupAvailability2"></div>
+				<div class="divTableCell" id="groupAvailability3"></div>
+				<div class="divTableCell" id="groupAvailability4"></div>
+				<div class="divTableCell" id="groupAvailability5"></div>
+				<div class="divTableCell" id="groupAvailability6"></div>
+			</div>
+			<div class="divTableRow">
+				<div class="divTableCell" id="groupAvailability7">0930</div>
+				<div class="divTableCell" id="groupAvailability8"></div>
+				<div class="divTableCell" id="groupAvailability9"></div>
+				<div class="divTableCell" id="groupAvailability10"></div>
+				<div class="divTableCell" id="groupAvailability11"></div>
+				<div class="divTableCell" id="groupAvailability12"></div>
+				<div class="divTableCell" id="groupAvailability13"></div>
+			</div>
+			<div class="divTableRow">
+				<div class="divTableCell" id="groupAvailability14">1000</div>
+				<div class="divTableCell" id="groupAvailability15"></div>
+				<div class="divTableCell" id="groupAvailability16"></div>
+				<div class="divTableCell" id="groupAvailability17"></div>
+				<div class="divTableCell" id="groupAvailability18"></div>
+				<div class="divTableCell" id="groupAvailability19"></div>
+				<div class="divTableCell" id="groupAvailability20"></div>
+			</div>
+			<div class="divTableRow">
+				<div class="divTableCell" id="groupAvailability21">1030</div>
+				<div class="divTableCell" id="groupAvailability22"></div>
+				<div class="divTableCell" id="groupAvailability23"></div>
+				<div class="divTableCell" id="groupAvailability24"></div>
+				<div class="divTableCell" id="groupAvailability25"></div>
+				<div class="divTableCell" id="groupAvailability26"></div>
+				<div class="divTableCell" id="groupAvailability27"></div>
+			</div>
+		</div>
+	</div>
+</body>
+<script>
+	var availability=[3,1,2,3,4,5,6,0,1,2,3,4,5,6,1,2,3,4,5,6,7,7,6,5,4,3,2,1];
+	var maxAvailability=Math.max.apply(null, availability);
+	var i;
+	for (i=0;i<availability.length;i++) {
+		var id="groupAvailability"+i;
+		var opa=availability[i]/maxAvailability
+		document.getElementById(id).style.background="green";
+		document.getElementById(id).style.opacity=opa;
+	}
+</script>
+</html>
