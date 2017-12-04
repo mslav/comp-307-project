@@ -33,11 +33,16 @@
 	<script>
 		// change color on group availability time table
 		$(function() {
-			var availability=[3,1,2,3,4,5,6,0,1,2,3,4,5,6,1,2,3,4,5,6,7,7,6,5,4,3,2,1];
+			var availability=[3,1,2,3,4,5,6,0,
+							  1,2,3,4,5,6,1,2,
+							  3,4,5,6,7,7,6,5,
+							  5,6,7,8,4,3,2,1,
+							  3,4,5,6,7,7,6,5,
+							  3,4,5,6,7,7,6,5];
 			var maxAvailability=Math.max.apply(null, availability);
 			var i;
 			for (i=0;i<availability.length;i++) {
-				var id="groupAvailability"+i;
+				var id="group"+i;
 				var opa=availability[i]/maxAvailability
 				document.getElementById(id).style.background="green";
 				document.getElementById(id).style.opacity=opa;
@@ -49,112 +54,207 @@
 <body>
 	<div class="jumbotron text-center">
 		<h1>Online Meeting Planner</h1>
-		<p>Plan your meeting without hassle!</P>
+		<p>Plan your meeting without hassle!</p>
 	</div>
 	<div class="container">
 		<div class="row">
-			<div class="col-sm-4">
+			<div class="col-sm-4" style="margin-right:0px">
+			<p>User1</p>
 				<div class="divTable">
-					<div class="divTableHead">
-						<div class="divTableRow">
-							<div class="divTableHeading">Sun</div>
-							<div class="divTableHeading">Mon</div>
-							<div class="divTableHeading">Tue</div>
-							<div class="divTableHeading">Wed</div>
-							<div class="divTableHeading">Thu</div>
-							<div class="divTableHeading">Fri</div>
-							<div class="divTableHeading">Sat</div>
-						</div>
-					</div>
 					<div class="divTableBody">
 						<div class="divTableRow">
-							<div class="divTableCell" id="sun0900" data-selected="false" onmousedown="changeColor(this.id)">0900</div>
-							<div class="divTableCell" id="mon0900" data-selected="false" onmousedown="changeColor(this.id)"></div>
-							<div class="divTableCell" id="tue0900" data-selected="false" onmousedown="changeColor(this.id)"></div>
-							<div class="divTableCell" id="wed0900" data-selected="false" onmousedown="changeColor(this.id)"></div>
-							<div class="divTableCell" id="thu0900" data-selected="false" onmousedown="changeColor(this.id)"></div>
-							<div class="divTableCell" id="fri0900" data-selected="false" onmousedown="changeColor(this.id)"></div>
-							<div class="divTableCell" id="sat0900" data-selected="false" onmousedown="changeColor(this.id)"></div>
+							<div class="divTableCell" id="user10" data-selected="false" onmousedown="changeColor(this.id)">00:00</div>
+							<div class="divTableCell" id="user11" data-selected="false" onmousedown="changeColor(this.id)">00:30</div>
+							<div class="divTableCell" id="user12" data-selected="false" onmousedown="changeColor(this.id)">01:00</div>
+							<div class="divTableCell" id="user13" data-selected="false" onmousedown="changeColor(this.id)">01:30</div>
+							<div class="divTableCell" id="user14" data-selected="false" onmousedown="changeColor(this.id)">02:00</div>
+							<div class="divTableCell" id="user15" data-selected="false" onmousedown="changeColor(this.id)">02:30</div>
+							<div class="divTableCell" id="user16" data-selected="false" onmousedown="changeColor(this.id)">03:00</div>
+							<div class="divTableCell" id="user17" data-selected="false" onmousedown="changeColor(this.id)">03:30</div>
 						</div>
 						<div class="divTableRow">
-							<div class="divTableCell" id="sun0930" data-selected="false" onmousedown="changeColor(this.id)">0930</div>
-							<div class="divTableCell" id="mon0930" data-selected="false" onmousedown="changeColor(this.id)"></div>
-							<div class="divTableCell" id="tue0930" data-selected="false" onmousedown="changeColor(this.id)"></div>
-							<div class="divTableCell" id="wed0930" data-selected="false" onmousedown="changeColor(this.id)"></div>
-							<div class="divTableCell" id="thu0930" data-selected="false" onmousedown="changeColor(this.id)"></div>
-							<div class="divTableCell" id="fri0930" data-selected="false" onmousedown="changeColor(this.id)"></div>
-							<div class="divTableCell" id="sat0930" data-selected="false" onmousedown="changeColor(this.id)"></div>
+							<div class="divTableCell" id="user18" data-selected="false" onmousedown="changeColor(this.id)">04:00</div>
+							<div class="divTableCell" id="user19" data-selected="false" onmousedown="changeColor(this.id)">04:30</div>
+							<div class="divTableCell" id="user110" data-selected="false" onmousedown="changeColor(this.id)">05:00</div>
+							<div class="divTableCell" id="user111" data-selected="false" onmousedown="changeColor(this.id)">05:30</div>
+							<div class="divTableCell" id="user112" data-selected="false" onmousedown="changeColor(this.id)">06:00</div>
+							<div class="divTableCell" id="user113" data-selected="false" onmousedown="changeColor(this.id)">06:30</div>
+							<div class="divTableCell" id="user114" data-selected="false" onmousedown="changeColor(this.id)">07:00</div>
+							<div class="divTableCell" id="user115" data-selected="false" onmousedown="changeColor(this.id)">07:30</div>
 						</div>
 						<div class="divTableRow">
-							<div class="divTableCell" id="sun1000" data-selected="false" onmousedown="changeColor(this.id)">1000</div>
-							<div class="divTableCell" id="mon1000" data-selected="false" onmousedown="changeColor(this.id)"></div>
-							<div class="divTableCell" id="tue1000" data-selected="false" onmousedown="changeColor(this.id)"></div>
-							<div class="divTableCell" id="wed1000" data-selected="false" onmousedown="changeColor(this.id)"></div>
-							<div class="divTableCell" id="thu1000" data-selected="false" onmousedown="changeColor(this.id)"></div>
-							<div class="divTableCell" id="fri1000" data-selected="false" onmousedown="changeColor(this.id)"></div>
-							<div class="divTableCell" id="sat1000" data-selected="false" onmousedown="changeColor(this.id)"></div>
+							<div class="divTableCell" id="user116" data-selected="false" onmousedown="changeColor(this.id)">08:00</div>
+							<div class="divTableCell" id="user117" data-selected="false" onmousedown="changeColor(this.id)">08:30</div>
+							<div class="divTableCell" id="user118" data-selected="false" onmousedown="changeColor(this.id)">09:00</div>
+							<div class="divTableCell" id="user119" data-selected="false" onmousedown="changeColor(this.id)">09:30</div>
+							<div class="divTableCell" id="user120" data-selected="false" onmousedown="changeColor(this.id)">10:00</div>
+							<div class="divTableCell" id="user121" data-selected="false" onmousedown="changeColor(this.id)">10:30</div>
+							<div class="divTableCell" id="user122" data-selected="false" onmousedown="changeColor(this.id)">11:00</div>
+							<div class="divTableCell" id="user123" data-selected="false" onmousedown="changeColor(this.id)">11:30</div>
 						</div>
 						<div class="divTableRow">
-							<div class="divTableCell" id="sun1030" data-selected="false" onmousedown="changeColor(this.id)">1030</div>
-							<div class="divTableCell" id="mon1030" data-selected="false" onmousedown="changeColor(this.id)"></div>
-							<div class="divTableCell" id="tue1030" data-selected="false" onmousedown="changeColor(this.id)"></div>
-							<div class="divTableCell" id="wed1030" data-selected="false" onmousedown="changeColor(this.id)"></div>
-							<div class="divTableCell" id="thu1030" data-selected="false" onmousedown="changeColor(this.id)"></div>
-							<div class="divTableCell" id="fri1030" data-selected="false" onmousedown="changeColor(this.id)"></div>
-							<div class="divTableCell" id="sat1030" data-selected="false" onmousedown="changeColor(this.id)"></div>
+							<div class="divTableCell" id="user124" data-selected="false" onmousedown="changeColor(this.id)">12:00</div>
+							<div class="divTableCell" id="user125" data-selected="false" onmousedown="changeColor(this.id)">12:30</div>
+							<div class="divTableCell" id="user126" data-selected="false" onmousedown="changeColor(this.id)">13:00</div>
+							<div class="divTableCell" id="user127" data-selected="false" onmousedown="changeColor(this.id)">13:30</div>
+							<div class="divTableCell" id="user128" data-selected="false" onmousedown="changeColor(this.id)">14:00</div>
+							<div class="divTableCell" id="user129" data-selected="false" onmousedown="changeColor(this.id)">14:30</div>
+							<div class="divTableCell" id="user130" data-selected="false" onmousedown="changeColor(this.id)">15:00</div>
+							<div class="divTableCell" id="user131" data-selected="false" onmousedown="changeColor(this.id)">15:30</div>
+						</div>
+						<div class="divTableRow">
+							<div class="divTableCell" id="user132" data-selected="false" onmousedown="changeColor(this.id)">16:00</div>
+							<div class="divTableCell" id="user133" data-selected="false" onmousedown="changeColor(this.id)">16:30</div>
+							<div class="divTableCell" id="user134" data-selected="false" onmousedown="changeColor(this.id)">17:00</div>
+							<div class="divTableCell" id="user135" data-selected="false" onmousedown="changeColor(this.id)">17:30</div>
+							<div class="divTableCell" id="user136" data-selected="false" onmousedown="changeColor(this.id)">18:00</div>
+							<div class="divTableCell" id="user137" data-selected="false" onmousedown="changeColor(this.id)">18:30</div>
+							<div class="divTableCell" id="user138" data-selected="false" onmousedown="changeColor(this.id)">19:00</div>
+							<div class="divTableCell" id="user139" data-selected="false" onmousedown="changeColor(this.id)">19:30</div>
+						</div>
+						<div class="divTableRow">
+							<div class="divTableCell" id="user140" data-selected="false" onmousedown="changeColor(this.id)">20:00</div>
+							<div class="divTableCell" id="user141" data-selected="false" onmousedown="changeColor(this.id)">20:30</div>
+							<div class="divTableCell" id="user142" data-selected="false" onmousedown="changeColor(this.id)">21:00</div>
+							<div class="divTableCell" id="user143" data-selected="false" onmousedown="changeColor(this.id)">21:30</div>
+							<div class="divTableCell" id="user144" data-selected="false" onmousedown="changeColor(this.id)">22:00</div>
+							<div class="divTableCell" id="user145" data-selected="false" onmousedown="changeColor(this.id)">22:30</div>
+							<div class="divTableCell" id="user146" data-selected="false" onmousedown="changeColor(this.id)">23:00</div>
+							<div class="divTableCell" id="user147" data-selected="false" onmousedown="changeColor(this.id)">23:30</div>
 						</div>
 					</div>
 				</div>
 			</div>
 			<div class="col-sm-4">
+			<p>User2</p>
 				<div class="divTable">
-					<div class="divTableHead">
-						<div class="divTableRow">
-							<div class="divTableHeading">Sun</div>
-							<div class="divTableHeading">Mon</div>
-							<div class="divTableHeading">Tue</div>
-							<div class="divTableHeading">Wed</div>
-							<div class="divTableHeading">Thu</div>
-							<div class="divTableHeading">Fri</div>
-							<div class="divTableHeading">Sat</div>
-						</div>
-					</div>
 					<div class="divTableBody">
 						<div class="divTableRow">
-							<div class="divTableCell" id="groupAvailability0">0900</div>
-							<div class="divTableCell" id="groupAvailability1"></div>
-							<div class="divTableCell" id="groupAvailability2"></div>
-							<div class="divTableCell" id="groupAvailability3"></div>
-							<div class="divTableCell" id="groupAvailability4"></div>
-							<div class="divTableCell" id="groupAvailability5"></div>
-							<div class="divTableCell" id="groupAvailability6"></div>
+							<div class="divTableCell" id="user20" data-selected="false" onmousedown="changeColor(this.id)">00:00</div>
+							<div class="divTableCell" id="user21" data-selected="false" onmousedown="changeColor(this.id)">00:30</div>
+							<div class="divTableCell" id="user22" data-selected="false" onmousedown="changeColor(this.id)">01:00</div>
+							<div class="divTableCell" id="user23" data-selected="false" onmousedown="changeColor(this.id)">01:30</div>
+							<div class="divTableCell" id="user24" data-selected="false" onmousedown="changeColor(this.id)">02:00</div>
+							<div class="divTableCell" id="user25" data-selected="false" onmousedown="changeColor(this.id)">02:30</div>
+							<div class="divTableCell" id="user26" data-selected="false" onmousedown="changeColor(this.id)">03:00</div>
+							<div class="divTableCell" id="user27" data-selected="false" onmousedown="changeColor(this.id)">03:30</div>
 						</div>
 						<div class="divTableRow">
-							<div class="divTableCell" id="groupAvailability7">0930</div>
-							<div class="divTableCell" id="groupAvailability8"></div>
-							<div class="divTableCell" id="groupAvailability9"></div>
-							<div class="divTableCell" id="groupAvailability10"></div>
-							<div class="divTableCell" id="groupAvailability11"></div>
-							<div class="divTableCell" id="groupAvailability12"></div>
-							<div class="divTableCell" id="groupAvailability13"></div>
+							<div class="divTableCell" id="user28" data-selected="false" onmousedown="changeColor(this.id)">04:00</div>
+							<div class="divTableCell" id="user29" data-selected="false" onmousedown="changeColor(this.id)">04:30</div>
+							<div class="divTableCell" id="user210" data-selected="false" onmousedown="changeColor(this.id)">05:00</div>
+							<div class="divTableCell" id="user211" data-selected="false" onmousedown="changeColor(this.id)">05:30</div>
+							<div class="divTableCell" id="user212" data-selected="false" onmousedown="changeColor(this.id)">06:00</div>
+							<div class="divTableCell" id="user213" data-selected="false" onmousedown="changeColor(this.id)">06:30</div>
+							<div class="divTableCell" id="user214" data-selected="false" onmousedown="changeColor(this.id)">07:00</div>
+							<div class="divTableCell" id="user215" data-selected="false" onmousedown="changeColor(this.id)">07:30</div>
 						</div>
 						<div class="divTableRow">
-							<div class="divTableCell" id="groupAvailability14">1000</div>
-							<div class="divTableCell" id="groupAvailability15"></div>
-							<div class="divTableCell" id="groupAvailability16"></div>
-							<div class="divTableCell" id="groupAvailability17"></div>
-							<div class="divTableCell" id="groupAvailability18"></div>
-							<div class="divTableCell" id="groupAvailability19"></div>
-							<div class="divTableCell" id="groupAvailability20"></div>
+							<div class="divTableCell" id="user216" data-selected="false" onmousedown="changeColor(this.id)">08:00</div>
+							<div class="divTableCell" id="user217" data-selected="false" onmousedown="changeColor(this.id)">08:30</div>
+							<div class="divTableCell" id="user218" data-selected="false" onmousedown="changeColor(this.id)">09:00</div>
+							<div class="divTableCell" id="user219" data-selected="false" onmousedown="changeColor(this.id)">09:30</div>
+							<div class="divTableCell" id="user220" data-selected="false" onmousedown="changeColor(this.id)">10:00</div>
+							<div class="divTableCell" id="user221" data-selected="false" onmousedown="changeColor(this.id)">10:30</div>
+							<div class="divTableCell" id="user222" data-selected="false" onmousedown="changeColor(this.id)">11:00</div>
+							<div class="divTableCell" id="user223" data-selected="false" onmousedown="changeColor(this.id)">11:30</div>
 						</div>
 						<div class="divTableRow">
-							<div class="divTableCell" id="groupAvailability21">1030</div>
-							<div class="divTableCell" id="groupAvailability22"></div>
-							<div class="divTableCell" id="groupAvailability23"></div>
-							<div class="divTableCell" id="groupAvailability24"></div>
-							<div class="divTableCell" id="groupAvailability25"></div>
-							<div class="divTableCell" id="groupAvailability26"></div>
-							<div class="divTableCell" id="groupAvailability27"></div>
+							<div class="divTableCell" id="user224" data-selected="false" onmousedown="changeColor(this.id)">12:00</div>
+							<div class="divTableCell" id="user225" data-selected="false" onmousedown="changeColor(this.id)">12:30</div>
+							<div class="divTableCell" id="user226" data-selected="false" onmousedown="changeColor(this.id)">13:00</div>
+							<div class="divTableCell" id="user227" data-selected="false" onmousedown="changeColor(this.id)">13:30</div>
+							<div class="divTableCell" id="user228" data-selected="false" onmousedown="changeColor(this.id)">14:00</div>
+							<div class="divTableCell" id="user229" data-selected="false" onmousedown="changeColor(this.id)">14:30</div>
+							<div class="divTableCell" id="user230" data-selected="false" onmousedown="changeColor(this.id)">15:00</div>
+							<div class="divTableCell" id="user231" data-selected="false" onmousedown="changeColor(this.id)">15:30</div>
+						</div>
+						<div class="divTableRow">
+							<div class="divTableCell" id="user232" data-selected="false" onmousedown="changeColor(this.id)">16:00</div>
+							<div class="divTableCell" id="user233" data-selected="false" onmousedown="changeColor(this.id)">16:30</div>
+							<div class="divTableCell" id="user234" data-selected="false" onmousedown="changeColor(this.id)">17:00</div>
+							<div class="divTableCell" id="user235" data-selected="false" onmousedown="changeColor(this.id)">17:30</div>
+							<div class="divTableCell" id="user236" data-selected="false" onmousedown="changeColor(this.id)">18:00</div>
+							<div class="divTableCell" id="user237" data-selected="false" onmousedown="changeColor(this.id)">18:30</div>
+							<div class="divTableCell" id="user238" data-selected="false" onmousedown="changeColor(this.id)">19:00</div>
+							<div class="divTableCell" id="user239" data-selected="false" onmousedown="changeColor(this.id)">19:30</div>
+						</div>
+						<div class="divTableRow">
+							<div class="divTableCell" id="user240" data-selected="false" onmousedown="changeColor(this.id)">20:00</div>
+							<div class="divTableCell" id="user241" data-selected="false" onmousedown="changeColor(this.id)">20:30</div>
+							<div class="divTableCell" id="user242" data-selected="false" onmousedown="changeColor(this.id)">21:00</div>
+							<div class="divTableCell" id="user243" data-selected="false" onmousedown="changeColor(this.id)">21:30</div>
+							<div class="divTableCell" id="user244" data-selected="false" onmousedown="changeColor(this.id)">22:00</div>
+							<div class="divTableCell" id="user245" data-selected="false" onmousedown="changeColor(this.id)">22:30</div>
+							<div class="divTableCell" id="user246" data-selected="false" onmousedown="changeColor(this.id)">23:00</div>
+							<div class="divTableCell" id="user247" data-selected="false" onmousedown="changeColor(this.id)">23:30</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-4">
+			<p>Group</p>
+				<div class="divTable">
+					<div class="divTableBody">
+						<div class="divTableRow">
+							<div class="divTableCell" id="group0">00:00</div>
+							<div class="divTableCell" id="group1">00:30</div>
+							<div class="divTableCell" id="group2">01:00</div>
+							<div class="divTableCell" id="group3">01:30</div>
+							<div class="divTableCell" id="group4">02:00</div>
+							<div class="divTableCell" id="group5">02:30</div>
+							<div class="divTableCell" id="group6">03:00</div>
+							<div class="divTableCell" id="group7">03:30</div>
+						</div>
+						<div class="divTableRow">
+							<div class="divTableCell" id="group8">04:00</div>
+							<div class="divTableCell" id="group9">04:30</div>
+							<div class="divTableCell" id="group10">05:00</div>
+							<div class="divTableCell" id="group11">05:30</div>
+							<div class="divTableCell" id="group12">06:00</div>
+							<div class="divTableCell" id="group13">06:30</div>
+							<div class="divTableCell" id="group14">07:00</div>
+							<div class="divTableCell" id="group15">07:30</div>
+						</div>
+						<div class="divTableRow">
+							<div class="divTableCell" id="group16">08:00</div>
+							<div class="divTableCell" id="group17">08:30</div>
+							<div class="divTableCell" id="group18">09:00</div>
+							<div class="divTableCell" id="group19">09:30</div>
+							<div class="divTableCell" id="group20">10:00</div>
+							<div class="divTableCell" id="group21">10:30</div>
+							<div class="divTableCell" id="group22">11:00</div>
+							<div class="divTableCell" id="group23">11:30</div>
+						</div>
+						<div class="divTableRow">
+							<div class="divTableCell" id="group24">12:00</div>
+							<div class="divTableCell" id="group25">12:30</div>
+							<div class="divTableCell" id="group26">13:00</div>
+							<div class="divTableCell" id="group27">13:30</div>
+							<div class="divTableCell" id="group28">14:00</div>
+							<div class="divTableCell" id="group29">14:30</div>
+							<div class="divTableCell" id="group30">15:00</div>
+							<div class="divTableCell" id="group31">15:30</div>
+						</div>
+						<div class="divTableRow">
+							<div class="divTableCell" id="group32">16:00</div>
+							<div class="divTableCell" id="group33">16:30</div>
+							<div class="divTableCell" id="group34">17:00</div>
+							<div class="divTableCell" id="group35">17:30</div>
+							<div class="divTableCell" id="group36">18:00</div>
+							<div class="divTableCell" id="group37">18:30</div>
+							<div class="divTableCell" id="group38">19:00</div>
+							<div class="divTableCell" id="group39">19:30</div>
+						</div>
+						<div class="divTableRow">
+							<div class="divTableCell" id="group40">20:00</div>
+							<div class="divTableCell" id="group41">20:30</div>
+							<div class="divTableCell" id="group42">21:00</div>
+							<div class="divTableCell" id="group43">21:30</div>
+							<div class="divTableCell" id="group44">22:00</div>
+							<div class="divTableCell" id="group45">22:30</div>
+							<div class="divTableCell" id="group46">23:00</div>
+							<div class="divTableCell" id="group47">23:30</div>
 						</div>
 					</div>
 				</div>
