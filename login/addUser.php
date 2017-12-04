@@ -4,7 +4,6 @@ $servername = "localhost";
 $username = "comp307";
 $password = "password";
 $database = "USER_BASE";
-$database2 = "USER_EVENTS";
 
 $conn = new mysqli($servername, $username, $password, $database);
 
@@ -19,11 +18,11 @@ $newEmail = $_POST['email'];
 	$count = mysqli_num_rows($result);
 
 	
-	if($count == 1){
+	if($count == 1 or $newName === "ATTEMPTS" or $newName === "EVENTS" or $newName === "USERS"){
 		
 	exit("Unavailable username.");
 
-	}else if(empty($newName) or empty($newPassword) or empty($newEmail) ){
+	}else if(empty($newName) or empty($newPassword) or empty($newEmail)){
 		
 		exit("Missing information.");
 		
@@ -34,12 +33,16 @@ $newEmail = $_POST['email'];
 		VALUES ('$newName', '$newPassword', '$newEmail')";
 		
 		// add a table to store the events
-		$conn2 = new mysqli($servername, $username, $password, $database2);
 		$sql2 = "CREATE TABLE `{$newName}` (
 		id INT(11))";
 		
+		// add a row to ATTEMPTS:
+		$sql3 = "INSERT INTO ATTEMPTS (username, number)
+		VALUES ('$newName', '0')";
 		
-		if ($conn->query($sql) === TRUE && $conn2->query($sql2) === TRUE) {
+		
+		
+		if ($conn->query($sql) === TRUE && $conn->query($sql2) === TRUE && $conn->query($sql3) === TRUE) {
 			echo "New account created successfully !";
 		} else {
 			echo "Error, try again later ";
