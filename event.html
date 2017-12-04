@@ -3,6 +3,7 @@
 
 <head>
 	<title>Online Meeting Planner</title>
+	<!-- favicon -->
 	<link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png">
 	<link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32x32.png">
 	<link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16x16.png">
@@ -10,54 +11,77 @@
 	<link rel="mask-icon" href="/icons/safari-pinned-tab.svg" color="#5bbad5">
 	<meta name="msapplication-config" content="/icons/browserconfig.xml">
 	<meta name="theme-color" content="#ffffff">
+	<!-- external stylesheet -->
 	<link rel="stylesheet" type="text/css" href="style.css">
+	<!-- jQuery -->
 	<script src="jquery-3.2.1.min.js"></script>
+	<!-- BootStrap -->
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<!-- script -->
 	<script>
-		var user1Availability=Array.apply(null, Array(48)).map(Number.prototype.valueOf,0); // array of 48 0s
-		var user2Availability=Array.apply(null, Array(48)).map(Number.prototype.valueOf,0);
-		
-		var groupAvailability=Array.apply(null, Array(48)).map(Number.prototype.valueOf,0);
-		// change color for current user availability time table
-		function changeColor(id) {
-			var username=id.split(":")[0];
-			var timeSlot=id.split(":")[1];
-			var arrayName=username+"Availability";
-			var selected = document.getElementById(id).getAttribute("data-selected");
-			if (selected==="false") {
-				document.getElementById(id).style.background="green";
-				document.getElementById(id).setAttribute("data-selected", "true");
-				eval(arrayName)[timeSlot]=1;
-				plotGroupAvailability();
+// TODO: retrive user availability from database
+		var userAvailability = Array.apply(null, Array(48)).map(Number.prototype.valueOf, 0); // array of 48 0s
+// TODO: remove this (user2 exists only for front end demo purpose)
+		var user2Availability = Array.apply(null, Array(48)).map(Number.prototype.valueOf, 0);
+// TODO: retrive group availability from database
+		var groupAvailability = Array.apply(null, Array(48)).map(Number.prototype.valueOf, 0);
+		// update user availability array and time table
+		function updateUserAvailability(id) {
+			var username = id.split(":")[0];
+			var timeSlot = id.split(":")[1];
+			var arrayName = username + "Availability";
+			var selected = document.getElementById(id).getAttribute("data-selected"); // has current time slot being selected already
+			if (selected === "false") { // if not selected
+				document.getElementById(id).style.background = "green"; // change color to green
+				document.getElementById(id).setAttribute("data-selected", "true"); // change selected to true
+				eval(arrayName)[timeSlot] = 1; // update user availability array (availability[time slot] = 1)
+// TODO: update user availability to database
+				updateGroupAvailability(); // update group availability 
 			} else {
-				document.getElementById(id).style.background="white";
+				document.getElementById(id).style.background = "white";
 				document.getElementById(id).setAttribute("data-selected", "false");
-				eval(arrayName)[timeSlot]=1;
-				plotGroupAvailability();
+				eval(arrayName)[timeSlot] = 0;
+// TODO: update user availability to database
+				updateGroupAvailability();
 			}
 		}
-		// plot group availability time table
-		function plotGroupAvailability() {
-			for (var i=0;i<48;i++) {
-				groupAvailability[i]=user1Availability[i]+user2Availability[i];
+		// update group availability array and time table
+		function updateGroupAvailability() {
+			// sum up all user availabilities for group availability
+// TODO: retrive all user availabilities from database
+			for (var i = 0; i < 48; i++) {
+// TODO: sum up all user availabilities
+				groupAvailability[i] = userAvailability[i] + user2Availability[i];
 			}
-			var maxAvailability=Math.max.apply(null, groupAvailability);
-			if (maxAvailability>0) {
-				for (var i=0;i<groupAvailability.length;i++) {
-					var id="group"+":"+i;
-					var opacity=groupAvailability[i]/maxAvailability
-					var color="rgba(0, 128, 0, "+opacity+")";
-					document.getElementById(id).style.background=color;
+			/* uncomment the following array for a group availability coloring demo
+			// the number in each cell indicate how many people are available at that time slot
+			groupAvailability=[0,0,0,1,2,3,4,5,
+							   6,6,6,7,8,9,9,8,
+							   7,6,5,4,3,1,3,0,
+							   1,2,3,4,5,1,1,1,
+							   0,1,1,3,4,5,6,7,
+							   6,5,4,3,2,1,0,0]
+			*/
+			var maxAvailability = Math.max.apply(null, groupAvailability);
+			for (var i = 0; i < groupAvailability.length; i++) {
+				var id = "group" + ":" + i;
+				var opacity;
+				if (maxAvailability > 0) { // handle divide by zero error
+					opacity = groupAvailability[i] / maxAvailability;
+				} else {
+					opacity = 0;
 				}
+				var color = "rgba(0, 128, 0, " + opacity + ")";
+				document.getElementById(id).style.background = color;
 			}
 		}
-		// change color on group availability time table
+		// update group availability only after the page is ready, using jQuery here
 		$(function() {
-			plotGroupAvailability();
+			updateGroupAvailability();
 		});
 	</script>
 </head>
@@ -70,139 +94,141 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-sm-4">
-			<p>User1</p>
+			<p>User Availability</p>
 				<div class="divTable">
 					<div class="divTableBody">
 						<div class="divTableRow">
-							<div class="divTableCell" id="user1:0" data-selected="false" onmousedown="changeColor(this.id)">00:00</div>
-							<div class="divTableCell" id="user1:1" data-selected="false" onmousedown="changeColor(this.id)">00:30</div>
-							<div class="divTableCell" id="user1:2" data-selected="false" onmousedown="changeColor(this.id)">01:00</div>
-							<div class="divTableCell" id="user1:3" data-selected="false" onmousedown="changeColor(this.id)">01:30</div>
-							<div class="divTableCell" id="user1:4" data-selected="false" onmousedown="changeColor(this.id)">02:00</div>
-							<div class="divTableCell" id="user1:5" data-selected="false" onmousedown="changeColor(this.id)">02:30</div>
-							<div class="divTableCell" id="user1:6" data-selected="false" onmousedown="changeColor(this.id)">03:00</div>
-							<div class="divTableCell" id="user1:7" data-selected="false" onmousedown="changeColor(this.id)">03:30</div>
+							<div class="divTableCell" id="user:0" data-selected="false" onmousedown="updateUserAvailability(this.id)">00:00</div>
+							<div class="divTableCell" id="user:1" data-selected="false" onmousedown="updateUserAvailability(this.id)">00:30</div>
+							<div class="divTableCell" id="user:2" data-selected="false" onmousedown="updateUserAvailability(this.id)">01:00</div>
+							<div class="divTableCell" id="user:3" data-selected="false" onmousedown="updateUserAvailability(this.id)">01:30</div>
+							<div class="divTableCell" id="user:4" data-selected="false" onmousedown="updateUserAvailability(this.id)">02:00</div>
+							<div class="divTableCell" id="user:5" data-selected="false" onmousedown="updateUserAvailability(this.id)">02:30</div>
+							<div class="divTableCell" id="user:6" data-selected="false" onmousedown="updateUserAvailability(this.id)">03:00</div>
+							<div class="divTableCell" id="user:7" data-selected="false" onmousedown="updateUserAvailability(this.id)">03:30</div>
 						</div>
 						<div class="divTableRow">
-							<div class="divTableCell" id="user1:8" data-selected="false" onmousedown="changeColor(this.id)">04:00</div>
-							<div class="divTableCell" id="user1:9" data-selected="false" onmousedown="changeColor(this.id)">04:30</div>
-							<div class="divTableCell" id="user1:10" data-selected="false" onmousedown="changeColor(this.id)">05:00</div>
-							<div class="divTableCell" id="user1:11" data-selected="false" onmousedown="changeColor(this.id)">05:30</div>
-							<div class="divTableCell" id="user1:12" data-selected="false" onmousedown="changeColor(this.id)">06:00</div>
-							<div class="divTableCell" id="user1:13" data-selected="false" onmousedown="changeColor(this.id)">06:30</div>
-							<div class="divTableCell" id="user1:14" data-selected="false" onmousedown="changeColor(this.id)">07:00</div>
-							<div class="divTableCell" id="user1:15" data-selected="false" onmousedown="changeColor(this.id)">07:30</div>
+							<div class="divTableCell" id="user:8" data-selected="false" onmousedown="updateUserAvailability(this.id)">04:00</div>
+							<div class="divTableCell" id="user:9" data-selected="false" onmousedown="updateUserAvailability(this.id)">04:30</div>
+							<div class="divTableCell" id="user:10" data-selected="false" onmousedown="updateUserAvailability(this.id)">05:00</div>
+							<div class="divTableCell" id="user:11" data-selected="false" onmousedown="updateUserAvailability(this.id)">05:30</div>
+							<div class="divTableCell" id="user:12" data-selected="false" onmousedown="updateUserAvailability(this.id)">06:00</div>
+							<div class="divTableCell" id="user:13" data-selected="false" onmousedown="updateUserAvailability(this.id)">06:30</div>
+							<div class="divTableCell" id="user:14" data-selected="false" onmousedown="updateUserAvailability(this.id)">07:00</div>
+							<div class="divTableCell" id="user:15" data-selected="false" onmousedown="updateUserAvailability(this.id)">07:30</div>
 						</div>
 						<div class="divTableRow">
-							<div class="divTableCell" id="user1:16" data-selected="false" onmousedown="changeColor(this.id)">08:00</div>
-							<div class="divTableCell" id="user1:17" data-selected="false" onmousedown="changeColor(this.id)">08:30</div>
-							<div class="divTableCell" id="user1:18" data-selected="false" onmousedown="changeColor(this.id)">09:00</div>
-							<div class="divTableCell" id="user1:19" data-selected="false" onmousedown="changeColor(this.id)">09:30</div>
-							<div class="divTableCell" id="user1:20" data-selected="false" onmousedown="changeColor(this.id)">10:00</div>
-							<div class="divTableCell" id="user1:21" data-selected="false" onmousedown="changeColor(this.id)">10:30</div>
-							<div class="divTableCell" id="user1:22" data-selected="false" onmousedown="changeColor(this.id)">11:00</div>
-							<div class="divTableCell" id="user1:23" data-selected="false" onmousedown="changeColor(this.id)">11:30</div>
+							<div class="divTableCell" id="user:16" data-selected="false" onmousedown="updateUserAvailability(this.id)">08:00</div>
+							<div class="divTableCell" id="user:17" data-selected="false" onmousedown="updateUserAvailability(this.id)">08:30</div>
+							<div class="divTableCell" id="user:18" data-selected="false" onmousedown="updateUserAvailability(this.id)">09:00</div>
+							<div class="divTableCell" id="user:19" data-selected="false" onmousedown="updateUserAvailability(this.id)">09:30</div>
+							<div class="divTableCell" id="user:20" data-selected="false" onmousedown="updateUserAvailability(this.id)">10:00</div>
+							<div class="divTableCell" id="user:21" data-selected="false" onmousedown="updateUserAvailability(this.id)">10:30</div>
+							<div class="divTableCell" id="user:22" data-selected="false" onmousedown="updateUserAvailability(this.id)">11:00</div>
+							<div class="divTableCell" id="user:23" data-selected="false" onmousedown="updateUserAvailability(this.id)">11:30</div>
 						</div>
 						<div class="divTableRow">
-							<div class="divTableCell" id="user1:24" data-selected="false" onmousedown="changeColor(this.id)">12:00</div>
-							<div class="divTableCell" id="user1:25" data-selected="false" onmousedown="changeColor(this.id)">12:30</div>
-							<div class="divTableCell" id="user1:26" data-selected="false" onmousedown="changeColor(this.id)">13:00</div>
-							<div class="divTableCell" id="user1:27" data-selected="false" onmousedown="changeColor(this.id)">13:30</div>
-							<div class="divTableCell" id="user1:28" data-selected="false" onmousedown="changeColor(this.id)">14:00</div>
-							<div class="divTableCell" id="user1:29" data-selected="false" onmousedown="changeColor(this.id)">14:30</div>
-							<div class="divTableCell" id="user1:30" data-selected="false" onmousedown="changeColor(this.id)">15:00</div>
-							<div class="divTableCell" id="user1:31" data-selected="false" onmousedown="changeColor(this.id)">15:30</div>
+							<div class="divTableCell" id="user:24" data-selected="false" onmousedown="updateUserAvailability(this.id)">12:00</div>
+							<div class="divTableCell" id="user:25" data-selected="false" onmousedown="updateUserAvailability(this.id)">12:30</div>
+							<div class="divTableCell" id="user:26" data-selected="false" onmousedown="updateUserAvailability(this.id)">13:00</div>
+							<div class="divTableCell" id="user:27" data-selected="false" onmousedown="updateUserAvailability(this.id)">13:30</div>
+							<div class="divTableCell" id="user:28" data-selected="false" onmousedown="updateUserAvailability(this.id)">14:00</div>
+							<div class="divTableCell" id="user:29" data-selected="false" onmousedown="updateUserAvailability(this.id)">14:30</div>
+							<div class="divTableCell" id="user:30" data-selected="false" onmousedown="updateUserAvailability(this.id)">15:00</div>
+							<div class="divTableCell" id="user:31" data-selected="false" onmousedown="updateUserAvailability(this.id)">15:30</div>
 						</div>
 						<div class="divTableRow">
-							<div class="divTableCell" id="user1:32" data-selected="false" onmousedown="changeColor(this.id)">16:00</div>
-							<div class="divTableCell" id="user1:33" data-selected="false" onmousedown="changeColor(this.id)">16:30</div>
-							<div class="divTableCell" id="user1:34" data-selected="false" onmousedown="changeColor(this.id)">17:00</div>
-							<div class="divTableCell" id="user1:35" data-selected="false" onmousedown="changeColor(this.id)">17:30</div>
-							<div class="divTableCell" id="user1:36" data-selected="false" onmousedown="changeColor(this.id)">18:00</div>
-							<div class="divTableCell" id="user1:37" data-selected="false" onmousedown="changeColor(this.id)">18:30</div>
-							<div class="divTableCell" id="user1:38" data-selected="false" onmousedown="changeColor(this.id)">19:00</div>
-							<div class="divTableCell" id="user1:39" data-selected="false" onmousedown="changeColor(this.id)">19:30</div>
+							<div class="divTableCell" id="user:32" data-selected="false" onmousedown="updateUserAvailability(this.id)">16:00</div>
+							<div class="divTableCell" id="user:33" data-selected="false" onmousedown="updateUserAvailability(this.id)">16:30</div>
+							<div class="divTableCell" id="user:34" data-selected="false" onmousedown="updateUserAvailability(this.id)">17:00</div>
+							<div class="divTableCell" id="user:35" data-selected="false" onmousedown="updateUserAvailability(this.id)">17:30</div>
+							<div class="divTableCell" id="user:36" data-selected="false" onmousedown="updateUserAvailability(this.id)">18:00</div>
+							<div class="divTableCell" id="user:37" data-selected="false" onmousedown="updateUserAvailability(this.id)">18:30</div>
+							<div class="divTableCell" id="user:38" data-selected="false" onmousedown="updateUserAvailability(this.id)">19:00</div>
+							<div class="divTableCell" id="user:39" data-selected="false" onmousedown="updateUserAvailability(this.id)">19:30</div>
 						</div>
 						<div class="divTableRow">
-							<div class="divTableCell" id="user1:40" data-selected="false" onmousedown="changeColor(this.id)">20:00</div>
-							<div class="divTableCell" id="user1:41" data-selected="false" onmousedown="changeColor(this.id)">20:30</div>
-							<div class="divTableCell" id="user1:42" data-selected="false" onmousedown="changeColor(this.id)">21:00</div>
-							<div class="divTableCell" id="user1:43" data-selected="false" onmousedown="changeColor(this.id)">21:30</div>
-							<div class="divTableCell" id="user1:44" data-selected="false" onmousedown="changeColor(this.id)">22:00</div>
-							<div class="divTableCell" id="user1:45" data-selected="false" onmousedown="changeColor(this.id)">22:30</div>
-							<div class="divTableCell" id="user1:46" data-selected="false" onmousedown="changeColor(this.id)">23:00</div>
-							<div class="divTableCell" id="user1:47" data-selected="false" onmousedown="changeColor(this.id)">23:30</div>
+							<div class="divTableCell" id="user:40" data-selected="false" onmousedown="updateUserAvailability(this.id)">20:00</div>
+							<div class="divTableCell" id="user:41" data-selected="false" onmousedown="updateUserAvailability(this.id)">20:30</div>
+							<div class="divTableCell" id="user:42" data-selected="false" onmousedown="updateUserAvailability(this.id)">21:00</div>
+							<div class="divTableCell" id="user:43" data-selected="false" onmousedown="updateUserAvailability(this.id)">21:30</div>
+							<div class="divTableCell" id="user:44" data-selected="false" onmousedown="updateUserAvailability(this.id)">22:00</div>
+							<div class="divTableCell" id="user:45" data-selected="false" onmousedown="updateUserAvailability(this.id)">22:30</div>
+							<div class="divTableCell" id="user:46" data-selected="false" onmousedown="updateUserAvailability(this.id)">23:00</div>
+							<div class="divTableCell" id="user:47" data-selected="false" onmousedown="updateUserAvailability(this.id)">23:30</div>
 						</div>
 					</div>
 				</div>
 			</div>
 			<div class="col-sm-4">
-			<p>User2</p>
+<!-- TODO: remove this (user2 exists only for front end demo purpose) start -->
+			<p>User2 Availability</p>
 				<div class="divTable">
 					<div class="divTableBody">
 						<div class="divTableRow">
-							<div class="divTableCell" id="user2:0" data-selected="false" onmousedown="changeColor(this.id)">00:00</div>
-							<div class="divTableCell" id="user2:1" data-selected="false" onmousedown="changeColor(this.id)">00:30</div>
-							<div class="divTableCell" id="user2:2" data-selected="false" onmousedown="changeColor(this.id)">01:00</div>
-							<div class="divTableCell" id="user2:3" data-selected="false" onmousedown="changeColor(this.id)">01:30</div>
-							<div class="divTableCell" id="user2:4" data-selected="false" onmousedown="changeColor(this.id)">02:00</div>
-							<div class="divTableCell" id="user2:5" data-selected="false" onmousedown="changeColor(this.id)">02:30</div>
-							<div class="divTableCell" id="user2:6" data-selected="false" onmousedown="changeColor(this.id)">03:00</div>
-							<div class="divTableCell" id="user2:7" data-selected="false" onmousedown="changeColor(this.id)">03:30</div>
+							<div class="divTableCell" id="user2:0" data-selected="false" onmousedown="updateUserAvailability(this.id)">00:00</div>
+							<div class="divTableCell" id="user2:1" data-selected="false" onmousedown="updateUserAvailability(this.id)">00:30</div>
+							<div class="divTableCell" id="user2:2" data-selected="false" onmousedown="updateUserAvailability(this.id)">01:00</div>
+							<div class="divTableCell" id="user2:3" data-selected="false" onmousedown="updateUserAvailability(this.id)">01:30</div>
+							<div class="divTableCell" id="user2:4" data-selected="false" onmousedown="updateUserAvailability(this.id)">02:00</div>
+							<div class="divTableCell" id="user2:5" data-selected="false" onmousedown="updateUserAvailability(this.id)">02:30</div>
+							<div class="divTableCell" id="user2:6" data-selected="false" onmousedown="updateUserAvailability(this.id)">03:00</div>
+							<div class="divTableCell" id="user2:7" data-selected="false" onmousedown="updateUserAvailability(this.id)">03:30</div>
 						</div>
 						<div class="divTableRow">
-							<div class="divTableCell" id="user2:8" data-selected="false" onmousedown="changeColor(this.id)">04:00</div>
-							<div class="divTableCell" id="user2:9" data-selected="false" onmousedown="changeColor(this.id)">04:30</div>
-							<div class="divTableCell" id="user2:10" data-selected="false" onmousedown="changeColor(this.id)">05:00</div>
-							<div class="divTableCell" id="user2:11" data-selected="false" onmousedown="changeColor(this.id)">05:30</div>
-							<div class="divTableCell" id="user2:12" data-selected="false" onmousedown="changeColor(this.id)">06:00</div>
-							<div class="divTableCell" id="user2:13" data-selected="false" onmousedown="changeColor(this.id)">06:30</div>
-							<div class="divTableCell" id="user2:14" data-selected="false" onmousedown="changeColor(this.id)">07:00</div>
-							<div class="divTableCell" id="user2:15" data-selected="false" onmousedown="changeColor(this.id)">07:30</div>
+							<div class="divTableCell" id="user2:8" data-selected="false" onmousedown="updateUserAvailability(this.id)">04:00</div>
+							<div class="divTableCell" id="user2:9" data-selected="false" onmousedown="updateUserAvailability(this.id)">04:30</div>
+							<div class="divTableCell" id="user2:10" data-selected="false" onmousedown="updateUserAvailability(this.id)">05:00</div>
+							<div class="divTableCell" id="user2:11" data-selected="false" onmousedown="updateUserAvailability(this.id)">05:30</div>
+							<div class="divTableCell" id="user2:12" data-selected="false" onmousedown="updateUserAvailability(this.id)">06:00</div>
+							<div class="divTableCell" id="user2:13" data-selected="false" onmousedown="updateUserAvailability(this.id)">06:30</div>
+							<div class="divTableCell" id="user2:14" data-selected="false" onmousedown="updateUserAvailability(this.id)">07:00</div>
+							<div class="divTableCell" id="user2:15" data-selected="false" onmousedown="updateUserAvailability(this.id)">07:30</div>
 						</div>
 						<div class="divTableRow">
-							<div class="divTableCell" id="user2:16" data-selected="false" onmousedown="changeColor(this.id)">08:00</div>
-							<div class="divTableCell" id="user2:17" data-selected="false" onmousedown="changeColor(this.id)">08:30</div>
-							<div class="divTableCell" id="user2:18" data-selected="false" onmousedown="changeColor(this.id)">09:00</div>
-							<div class="divTableCell" id="user2:19" data-selected="false" onmousedown="changeColor(this.id)">09:30</div>
-							<div class="divTableCell" id="user2:20" data-selected="false" onmousedown="changeColor(this.id)">10:00</div>
-							<div class="divTableCell" id="user2:21" data-selected="false" onmousedown="changeColor(this.id)">10:30</div>
-							<div class="divTableCell" id="user2:22" data-selected="false" onmousedown="changeColor(this.id)">11:00</div>
-							<div class="divTableCell" id="user2:23" data-selected="false" onmousedown="changeColor(this.id)">11:30</div>
+							<div class="divTableCell" id="user2:16" data-selected="false" onmousedown="updateUserAvailability(this.id)">08:00</div>
+							<div class="divTableCell" id="user2:17" data-selected="false" onmousedown="updateUserAvailability(this.id)">08:30</div>
+							<div class="divTableCell" id="user2:18" data-selected="false" onmousedown="updateUserAvailability(this.id)">09:00</div>
+							<div class="divTableCell" id="user2:19" data-selected="false" onmousedown="updateUserAvailability(this.id)">09:30</div>
+							<div class="divTableCell" id="user2:20" data-selected="false" onmousedown="updateUserAvailability(this.id)">10:00</div>
+							<div class="divTableCell" id="user2:21" data-selected="false" onmousedown="updateUserAvailability(this.id)">10:30</div>
+							<div class="divTableCell" id="user2:22" data-selected="false" onmousedown="updateUserAvailability(this.id)">11:00</div>
+							<div class="divTableCell" id="user2:23" data-selected="false" onmousedown="updateUserAvailability(this.id)">11:30</div>
 						</div>
 						<div class="divTableRow">
-							<div class="divTableCell" id="user2:24" data-selected="false" onmousedown="changeColor(this.id)">12:00</div>
-							<div class="divTableCell" id="user2:25" data-selected="false" onmousedown="changeColor(this.id)">12:30</div>
-							<div class="divTableCell" id="user2:26" data-selected="false" onmousedown="changeColor(this.id)">13:00</div>
-							<div class="divTableCell" id="user2:27" data-selected="false" onmousedown="changeColor(this.id)">13:30</div>
-							<div class="divTableCell" id="user2:28" data-selected="false" onmousedown="changeColor(this.id)">14:00</div>
-							<div class="divTableCell" id="user2:29" data-selected="false" onmousedown="changeColor(this.id)">14:30</div>
-							<div class="divTableCell" id="user2:30" data-selected="false" onmousedown="changeColor(this.id)">15:00</div>
-							<div class="divTableCell" id="user2:31" data-selected="false" onmousedown="changeColor(this.id)">15:30</div>
+							<div class="divTableCell" id="user2:24" data-selected="false" onmousedown="updateUserAvailability(this.id)">12:00</div>
+							<div class="divTableCell" id="user2:25" data-selected="false" onmousedown="updateUserAvailability(this.id)">12:30</div>
+							<div class="divTableCell" id="user2:26" data-selected="false" onmousedown="updateUserAvailability(this.id)">13:00</div>
+							<div class="divTableCell" id="user2:27" data-selected="false" onmousedown="updateUserAvailability(this.id)">13:30</div>
+							<div class="divTableCell" id="user2:28" data-selected="false" onmousedown="updateUserAvailability(this.id)">14:00</div>
+							<div class="divTableCell" id="user2:29" data-selected="false" onmousedown="updateUserAvailability(this.id)">14:30</div>
+							<div class="divTableCell" id="user2:30" data-selected="false" onmousedown="updateUserAvailability(this.id)">15:00</div>
+							<div class="divTableCell" id="user2:31" data-selected="false" onmousedown="updateUserAvailability(this.id)">15:30</div>
 						</div>
 						<div class="divTableRow">
-							<div class="divTableCell" id="user2:32" data-selected="false" onmousedown="changeColor(this.id)">16:00</div>
-							<div class="divTableCell" id="user2:33" data-selected="false" onmousedown="changeColor(this.id)">16:30</div>
-							<div class="divTableCell" id="user2:34" data-selected="false" onmousedown="changeColor(this.id)">17:00</div>
-							<div class="divTableCell" id="user2:35" data-selected="false" onmousedown="changeColor(this.id)">17:30</div>
-							<div class="divTableCell" id="user2:36" data-selected="false" onmousedown="changeColor(this.id)">18:00</div>
-							<div class="divTableCell" id="user2:37" data-selected="false" onmousedown="changeColor(this.id)">18:30</div>
-							<div class="divTableCell" id="user2:38" data-selected="false" onmousedown="changeColor(this.id)">19:00</div>
-							<div class="divTableCell" id="user2:39" data-selected="false" onmousedown="changeColor(this.id)">19:30</div>
+							<div class="divTableCell" id="user2:32" data-selected="false" onmousedown="updateUserAvailability(this.id)">16:00</div>
+							<div class="divTableCell" id="user2:33" data-selected="false" onmousedown="updateUserAvailability(this.id)">16:30</div>
+							<div class="divTableCell" id="user2:34" data-selected="false" onmousedown="updateUserAvailability(this.id)">17:00</div>
+							<div class="divTableCell" id="user2:35" data-selected="false" onmousedown="updateUserAvailability(this.id)">17:30</div>
+							<div class="divTableCell" id="user2:36" data-selected="false" onmousedown="updateUserAvailability(this.id)">18:00</div>
+							<div class="divTableCell" id="user2:37" data-selected="false" onmousedown="updateUserAvailability(this.id)">18:30</div>
+							<div class="divTableCell" id="user2:38" data-selected="false" onmousedown="updateUserAvailability(this.id)">19:00</div>
+							<div class="divTableCell" id="user2:39" data-selected="false" onmousedown="updateUserAvailability(this.id)">19:30</div>
 						</div>
 						<div class="divTableRow">
-							<div class="divTableCell" id="user2:40" data-selected="false" onmousedown="changeColor(this.id)">20:00</div>
-							<div class="divTableCell" id="user2:41" data-selected="false" onmousedown="changeColor(this.id)">20:30</div>
-							<div class="divTableCell" id="user2:42" data-selected="false" onmousedown="changeColor(this.id)">21:00</div>
-							<div class="divTableCell" id="user2:43" data-selected="false" onmousedown="changeColor(this.id)">21:30</div>
-							<div class="divTableCell" id="user2:44" data-selected="false" onmousedown="changeColor(this.id)">22:00</div>
-							<div class="divTableCell" id="user2:45" data-selected="false" onmousedown="changeColor(this.id)">22:30</div>
-							<div class="divTableCell" id="user2:46" data-selected="false" onmousedown="changeColor(this.id)">23:00</div>
-							<div class="divTableCell" id="user2:47" data-selected="false" onmousedown="changeColor(this.id)">23:30</div>
+							<div class="divTableCell" id="user2:40" data-selected="false" onmousedown="updateUserAvailability(this.id)">20:00</div>
+							<div class="divTableCell" id="user2:41" data-selected="false" onmousedown="updateUserAvailability(this.id)">20:30</div>
+							<div class="divTableCell" id="user2:42" data-selected="false" onmousedown="updateUserAvailability(this.id)">21:00</div>
+							<div class="divTableCell" id="user2:43" data-selected="false" onmousedown="updateUserAvailability(this.id)">21:30</div>
+							<div class="divTableCell" id="user2:44" data-selected="false" onmousedown="updateUserAvailability(this.id)">22:00</div>
+							<div class="divTableCell" id="user2:45" data-selected="false" onmousedown="updateUserAvailability(this.id)">22:30</div>
+							<div class="divTableCell" id="user2:46" data-selected="false" onmousedown="updateUserAvailability(this.id)">23:00</div>
+							<div class="divTableCell" id="user2:47" data-selected="false" onmousedown="updateUserAvailability(this.id)">23:30</div>
 						</div>
 					</div>
 				</div>
 			</div>
+<!--TODO: remove this (user2 exists only for front end demo purpose) end -->
 			<div class="col-sm-4">
 			<p>Group</p>
 				<div class="divTable">
