@@ -1,5 +1,5 @@
 <?php 
-
+session_start();
 $servername = "localhost";
 $username = "comp307";
 $password = "password";
@@ -9,17 +9,12 @@ $conn = new mysqli($servername, $username, $password, $database);
 
 $user = $_SESSION['username'];
 
-$sql = "SELECT * FROM EVENTS INNER JOIN $user ON EVENTS.id = $user.id; ";
-$result = mysql_query($sql);
-
-if ($conn->query($sql) === TRUE) {
-} else {
-	echo "Error, try again later ";
-}
+$sql = "SELECT * FROM EVENTS INNER JOIN $user ON EVENTS.id = $user.id";
+$result = mysqli_query($conn,$sql);
 
 echo "<table>";
 
-while($row = mysql_fetch_array($result)){   
+while($row = mysqli_fetch_array($result)){   
     echo "<tr><td>" . $row['name'] . "</td><td>"; 
 }
 
