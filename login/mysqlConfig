@@ -19,5 +19,8 @@ CREATE TABLE `USER_BASE`.`EVENTS` (
     `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `name` VARCHAR(30) NOT NULL,
     `availableTime` VARCHAR(30),
-    `date` DATE NOT NULL
+    `date` DATE NOT NULL,
+    `userslist` VARCHAR(300) NOT NULL
 );
+
+
