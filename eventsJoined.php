@@ -12,13 +12,12 @@ $user = $_SESSION['username'];
 $sql = "SELECT * FROM EVENTS INNER JOIN $user ON EVENTS.id = $user.id";
 $result = mysqli_query($conn,$sql);
 
-echo "<table>";
 
 while($row = mysqli_fetch_array($result)){   
-    echo "<tr><td>" . $row['name'] . "</td><td>"; 
+    echo $row['name'] . '<form action="sendTimes.php" method="post"> <input type=\'hidden\' name="eventId" value=" ' . $row['id'] . ' " /> <input type="submit" value="go"> </form> <br>'; 
 }
 
-echo "</table>"; 
+echo '<a href="dashboard.html">Go back to dashboard</a> <br>';
 
 
 $conn->close();
