@@ -69,18 +69,20 @@
 		function updateGroupAvailability() {
 			// sum up all user availabilities for group availability
 // TODO: retrive all user availabilities from database
-			for (var i = 0; i < 48; i++) {
-// TODO: sum up all user availabilities
-				groupAvailability[i] = user[i] + user2[i];
+			var groupRaw = getParameterByName("groupAvailability");
+			var groupAvailability = Array.apply(null, Array(48)).map(Number.prototype.valueOf, 0);
+			for (var i = 0; i < groupRaw.length; i++) {
+				var index = i % 48;
+				groupAvailability[index] += groupRaw[i];
 			}
-			/* uncomment the following array for a group availability coloring demo
+			/* //uncomment the following array for a group availability coloring demo
 			// the number in each cell indicate how many people are available at that time slot
 			groupAvailability=[0,0,0,1,2,3,4,5,
 							   6,6,6,7,8,9,9,8,
 							   7,6,5,4,3,1,3,0,
 							   1,2,3,4,5,1,1,1,
 							   0,1,1,3,4,5,6,7,
-							   6,5,4,3,2,1,0,0]
+							   6,5,4,3,2,1,0,0];
 			*/
 			var maxAvailability = Math.max.apply(null, groupAvailability);
 			for (var i = 0; i < groupAvailability.length; i++) {
