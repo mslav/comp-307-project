@@ -24,27 +24,52 @@
 	<!-- script -->
 	<script>
 // TODO: retrive user availability from database
-		var userAvailability = Array.apply(null, Array(48)).map(Number.prototype.valueOf, 0); // array of 48 0s
+		// ***fake database start*** //
+		var userlist=[aaa, bob, cat];
+		var aaa = [0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+		var bob = [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+		var cat = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+		var zero = Array.apply(null, Array(48)).map(Number.prototype.valueOf, 0); // array of 48 0s
+		// ***fake database end***//
+		var user = Array.apply(null, Array(48)).map(Number.prototype.valueOf, 0); // array of 48 0s
 // TODO: remove this (user2 exists only for front end demo purpose)
-		var user2Availability = Array.apply(null, Array(48)).map(Number.prototype.valueOf, 0);
+		var user2 = Array.apply(null, Array(48)).map(Number.prototype.valueOf, 0);
 // TODO: retrive group availability from database
 		var groupAvailability = Array.apply(null, Array(48)).map(Number.prototype.valueOf, 0);
+		// get parameter from query string
+		function getParameterByName(name, url) {
+			if (!url) url = window.location.href;
+			name = name.replace(/[\[\]]/g, "\\$&");
+			var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+			results = regex.exec(url);
+			if (!results) return null;
+			if (!results[2]) return '';
+			return decodeURIComponent(results[2].replace(/\+/g, " "));
+		}
+		// load user availability time table from user availability array
+		function sendAvailability() {
+			var string = ""
+			for (var i = 0; i < 48; i++) {
+				string += user[i];
+			}
+			document.getElementById('hiddenField').value = string;
+			document.getElementById("myForm").submit();
+		}
 		// update user availability array and time table
 		function updateUserAvailability(id) {
 			var username = id.split(":")[0];
 			var timeSlot = id.split(":")[1];
-			var arrayName = username + "Availability";
 			var selected = document.getElementById(id).getAttribute("data-selected"); // has current time slot being selected already
 			if (selected === "false") { // if not selected
 				document.getElementById(id).style.background = "green"; // change color to green
 				document.getElementById(id).setAttribute("data-selected", "true"); // change selected to true
-				eval(arrayName)[timeSlot] = 1; // update user availability array (availability[time slot] = 1)
+				eval(username)[timeSlot] = 1; // update user availability array (availability[time slot] = 1)
 // TODO: update user availability to database
 				updateGroupAvailability(); // update group availability 
 			} else {
 				document.getElementById(id).style.background = "white";
 				document.getElementById(id).setAttribute("data-selected", "false");
-				eval(arrayName)[timeSlot] = 0;
+				eval(username)[timeSlot] = 0;
 // TODO: update user availability to database
 				updateGroupAvailability();
 			}
@@ -55,7 +80,7 @@
 // TODO: retrive all user availabilities from database
 			for (var i = 0; i < 48; i++) {
 // TODO: sum up all user availabilities
-				groupAvailability[i] = userAvailability[i] + user2Availability[i];
+				groupAvailability[i] = user[i] + user2[i];
 			}
 			/* uncomment the following array for a group availability coloring demo
 			// the number in each cell indicate how many people are available at that time slot
@@ -93,6 +118,13 @@
 	</div>
 	<div class="container">
 		<div class="row">
+			<div class="col-sm-4">
+				<form action="" method="get">
+					Sent user availability:<br><br>
+					<input type='hidden' id= 'hiddenField' name='id' value='' />
+					<input type="submit" value="Submit" onmousedown="sendAvailability()">
+				</form>
+			</div>
 			<div class="col-sm-4">
 			<p>User Availability</p>
 				<div class="divTable">
@@ -160,75 +192,6 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-sm-4">
-<!-- TODO: remove this (user2 exists only for front end demo purpose) start -->
-			<p>User2 Availability</p>
-				<div class="divTable">
-					<div class="divTableBody">
-						<div class="divTableRow">
-							<div class="divTableCell" id="user2:0" data-selected="false" onmousedown="updateUserAvailability(this.id)">00:00</div>
-							<div class="divTableCell" id="user2:1" data-selected="false" onmousedown="updateUserAvailability(this.id)">00:30</div>
-							<div class="divTableCell" id="user2:2" data-selected="false" onmousedown="updateUserAvailability(this.id)">01:00</div>
-							<div class="divTableCell" id="user2:3" data-selected="false" onmousedown="updateUserAvailability(this.id)">01:30</div>
-							<div class="divTableCell" id="user2:4" data-selected="false" onmousedown="updateUserAvailability(this.id)">02:00</div>
-							<div class="divTableCell" id="user2:5" data-selected="false" onmousedown="updateUserAvailability(this.id)">02:30</div>
-							<div class="divTableCell" id="user2:6" data-selected="false" onmousedown="updateUserAvailability(this.id)">03:00</div>
-							<div class="divTableCell" id="user2:7" data-selected="false" onmousedown="updateUserAvailability(this.id)">03:30</div>
-						</div>
-						<div class="divTableRow">
-							<div class="divTableCell" id="user2:8" data-selected="false" onmousedown="updateUserAvailability(this.id)">04:00</div>
-							<div class="divTableCell" id="user2:9" data-selected="false" onmousedown="updateUserAvailability(this.id)">04:30</div>
-							<div class="divTableCell" id="user2:10" data-selected="false" onmousedown="updateUserAvailability(this.id)">05:00</div>
-							<div class="divTableCell" id="user2:11" data-selected="false" onmousedown="updateUserAvailability(this.id)">05:30</div>
-							<div class="divTableCell" id="user2:12" data-selected="false" onmousedown="updateUserAvailability(this.id)">06:00</div>
-							<div class="divTableCell" id="user2:13" data-selected="false" onmousedown="updateUserAvailability(this.id)">06:30</div>
-							<div class="divTableCell" id="user2:14" data-selected="false" onmousedown="updateUserAvailability(this.id)">07:00</div>
-							<div class="divTableCell" id="user2:15" data-selected="false" onmousedown="updateUserAvailability(this.id)">07:30</div>
-						</div>
-						<div class="divTableRow">
-							<div class="divTableCell" id="user2:16" data-selected="false" onmousedown="updateUserAvailability(this.id)">08:00</div>
-							<div class="divTableCell" id="user2:17" data-selected="false" onmousedown="updateUserAvailability(this.id)">08:30</div>
-							<div class="divTableCell" id="user2:18" data-selected="false" onmousedown="updateUserAvailability(this.id)">09:00</div>
-							<div class="divTableCell" id="user2:19" data-selected="false" onmousedown="updateUserAvailability(this.id)">09:30</div>
-							<div class="divTableCell" id="user2:20" data-selected="false" onmousedown="updateUserAvailability(this.id)">10:00</div>
-							<div class="divTableCell" id="user2:21" data-selected="false" onmousedown="updateUserAvailability(this.id)">10:30</div>
-							<div class="divTableCell" id="user2:22" data-selected="false" onmousedown="updateUserAvailability(this.id)">11:00</div>
-							<div class="divTableCell" id="user2:23" data-selected="false" onmousedown="updateUserAvailability(this.id)">11:30</div>
-						</div>
-						<div class="divTableRow">
-							<div class="divTableCell" id="user2:24" data-selected="false" onmousedown="updateUserAvailability(this.id)">12:00</div>
-							<div class="divTableCell" id="user2:25" data-selected="false" onmousedown="updateUserAvailability(this.id)">12:30</div>
-							<div class="divTableCell" id="user2:26" data-selected="false" onmousedown="updateUserAvailability(this.id)">13:00</div>
-							<div class="divTableCell" id="user2:27" data-selected="false" onmousedown="updateUserAvailability(this.id)">13:30</div>
-							<div class="divTableCell" id="user2:28" data-selected="false" onmousedown="updateUserAvailability(this.id)">14:00</div>
-							<div class="divTableCell" id="user2:29" data-selected="false" onmousedown="updateUserAvailability(this.id)">14:30</div>
-							<div class="divTableCell" id="user2:30" data-selected="false" onmousedown="updateUserAvailability(this.id)">15:00</div>
-							<div class="divTableCell" id="user2:31" data-selected="false" onmousedown="updateUserAvailability(this.id)">15:30</div>
-						</div>
-						<div class="divTableRow">
-							<div class="divTableCell" id="user2:32" data-selected="false" onmousedown="updateUserAvailability(this.id)">16:00</div>
-							<div class="divTableCell" id="user2:33" data-selected="false" onmousedown="updateUserAvailability(this.id)">16:30</div>
-							<div class="divTableCell" id="user2:34" data-selected="false" onmousedown="updateUserAvailability(this.id)">17:00</div>
-							<div class="divTableCell" id="user2:35" data-selected="false" onmousedown="updateUserAvailability(this.id)">17:30</div>
-							<div class="divTableCell" id="user2:36" data-selected="false" onmousedown="updateUserAvailability(this.id)">18:00</div>
-							<div class="divTableCell" id="user2:37" data-selected="false" onmousedown="updateUserAvailability(this.id)">18:30</div>
-							<div class="divTableCell" id="user2:38" data-selected="false" onmousedown="updateUserAvailability(this.id)">19:00</div>
-							<div class="divTableCell" id="user2:39" data-selected="false" onmousedown="updateUserAvailability(this.id)">19:30</div>
-						</div>
-						<div class="divTableRow">
-							<div class="divTableCell" id="user2:40" data-selected="false" onmousedown="updateUserAvailability(this.id)">20:00</div>
-							<div class="divTableCell" id="user2:41" data-selected="false" onmousedown="updateUserAvailability(this.id)">20:30</div>
-							<div class="divTableCell" id="user2:42" data-selected="false" onmousedown="updateUserAvailability(this.id)">21:00</div>
-							<div class="divTableCell" id="user2:43" data-selected="false" onmousedown="updateUserAvailability(this.id)">21:30</div>
-							<div class="divTableCell" id="user2:44" data-selected="false" onmousedown="updateUserAvailability(this.id)">22:00</div>
-							<div class="divTableCell" id="user2:45" data-selected="false" onmousedown="updateUserAvailability(this.id)">22:30</div>
-							<div class="divTableCell" id="user2:46" data-selected="false" onmousedown="updateUserAvailability(this.id)">23:00</div>
-							<div class="divTableCell" id="user2:47" data-selected="false" onmousedown="updateUserAvailability(this.id)">23:30</div>
-						</div>
-					</div>
-				</div>
-			</div>
-<!--TODO: remove this (user2 exists only for front end demo purpose) end -->
 			<div class="col-sm-4">
 			<p>Group</p>
 				<div class="divTable">
