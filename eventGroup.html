@@ -97,9 +97,15 @@
 				document.getElementById(id).style.background = color;
 			}
 		}
+		
+		function updateGroupName() {
+			var eName = getParameterByName("eName");
+			document.getElementById("groupName").innerHTML = "Group Availability for " + eName;
+		}
 		// update group availability only after the page is ready, using jQuery here
 		$(function() {
 			updateGroupAvailability();
+			updateGroupName();
 		});
 	</script>
 </head>
@@ -112,7 +118,7 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-sm-4">
-			<p>Group</p>
+			<p id="groupName">Group Availability</p>
 				<div class="divTable">
 					<div class="divTableBody">
 						<div class="divTableRow">
