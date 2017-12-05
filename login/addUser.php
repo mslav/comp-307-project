@@ -33,8 +33,7 @@ $newEmail = $_POST['email'];
 		VALUES ('$newName', '$newPassword', '$newEmail')";
 		
 		// add a table to store the events
-		$sql2 = "CREATE TABLE `{$newName}` (
-		id INT(11))";
+		$sql2 = "CREATE TABLE `{$newName}` (id INT(11), availableTime VARCHAR(60))";
 		
 		// add a row to ATTEMPTS:
 		$sql3 = "INSERT INTO ATTEMPTS (username, number)
@@ -44,6 +43,7 @@ $newEmail = $_POST['email'];
 		
 		if ($conn->query($sql) === TRUE && $conn->query($sql2) === TRUE && $conn->query($sql3) === TRUE) {
 			echo "New account created successfully !";
+			echo '<html><a href="index.html">Login!</a></html>';
 		} else {
 			echo "Error, try again later ";
 		}
