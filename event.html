@@ -110,13 +110,6 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-sm-4">
-				<form action="updateTime.php" method="post">
-					Sent user availability:<br><br>
-					<input type="hidden" id="hiddenField" name="userAvailability" value=""/>
-					<input type="submit" value="Submit" onmousedown="sendAvailability()">
-				</form>
-			</div>
-			<div class="col-sm-4">
 			<p>User Availability</p>
 				<div class="divTable">
 					<div class="divTableBody">
@@ -182,6 +175,13 @@
 						</div>
 					</div>
 				</div>
+			</div>
+			<div class="col-sm-4">
+				<form action="updateTime.php" method="post">
+					Sent user availability:<br><br>
+					<input type="hidden" id="hiddenField" name="userAvailability" value=""/>
+					<input type="submit" value="Submit" onmousedown="sendAvailability()">
+				</form>
 			</div>
 		</div>
 	</div>
