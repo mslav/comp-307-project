@@ -70,6 +70,7 @@
 			// sum up all user availabilities for group availability
 // TODO: retrive all user availabilities from database
 			var groupRaw = getParameterByName("groupAvailability");
+			alert(groupRaw.substr(1));
 			var groupAvailability = Array.apply(null, Array(48)).map(Number.prototype.valueOf, 0);
 			for (var i = 0; i < groupRaw.length; i++) {
 				var index = i % 48;
