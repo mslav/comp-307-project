@@ -23,9 +23,7 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<!-- script -->
 	<script>
-// TODO: retrive user availability from database
 		var user = Array.apply(null, Array(48)).map(Number.prototype.valueOf, 0); // array of 48 0s
-// TODO: retrive group availability from database
 		var groupAvailability = Array.apply(null, Array(48)).map(Number.prototype.valueOf, 0);
 		// get parameter from query string
 		function getParameterByName(name, url) {
@@ -55,20 +53,17 @@
 				document.getElementById(id).style.background = "green"; // change color to green
 				document.getElementById(id).setAttribute("data-selected", "true"); // change selected to true
 				eval(username)[timeSlot] = 1; // update user availability array (availability[time slot] = 1)
-// TODO: update user availability to database
 				updateGroupAvailability(); // update group availability 
 			} else {
 				document.getElementById(id).style.background = "white";
 				document.getElementById(id).setAttribute("data-selected", "false");
 				eval(username)[timeSlot] = 0;
-// TODO: update user availability to database
 				updateGroupAvailability();
 			}
 		}
 		// update group availability array and time table
 		function updateGroupAvailability() {
 			// sum up all user availabilities for group availability
-// TODO: retrive all user availabilities from database
 			var groupRaw = getParameterByName("allTimes").substr(1);
 			var groupAvailability = Array.apply(null, Array(48)).map(Number.prototype.valueOf, 0);
 			for (var i = 0; i < groupRaw.length; i++) {
