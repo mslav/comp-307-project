@@ -65,11 +65,15 @@
 		function updateGroupAvailability() {
 			// sum up all user availabilities for group availability
 			var groupRaw = getParameterByName("allTimes").substr(1);
+			console.log(groupRaw);
 			var groupAvailability = Array.apply(null, Array(48)).map(Number.prototype.valueOf, 0);
 			for (var i = 0; i < groupRaw.length; i++) {
 				var index = i % 48;
-				groupAvailability[index] += groupRaw[i];
+				if (groupRaw[i] == 1) {
+					groupAvailability[index] = groupAvailability[index] + 1;
+				}
 			}
+			console.log(groupAvailability);
 			/* //uncomment the following array for a group availability coloring demo
 			// the number in each cell indicate how many people are available at that time slot
 			groupAvailability=[0,0,0,1,2,3,4,5,
