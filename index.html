@@ -3,6 +3,7 @@
 
 <head>
 	<title>Online Meeting Planner</title>
+	<!-- favicon -->
 	<link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png">
 	<link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32x32.png">
 	<link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16x16.png">
@@ -10,37 +11,40 @@
 	<link rel="mask-icon" href="/icons/safari-pinned-tab.svg" color="#5bbad5">
 	<meta name="msapplication-config" content="/icons/browserconfig.xml">
 	<meta name="theme-color" content="#ffffff">
+	<!-- external stylesheet -->
 	<link rel="stylesheet" type="text/css" href="style.css">
+	<!-- jQuery -->
 	<script src="jquery-3.2.1.min.js"></script>
+	<!-- BootStrap -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 
 <body>
-	<h1>Online Meeting Planner</h1>
-	
-	<body>
-
-	
-
-	<form action="login.php" method="post">
-
-		Login<br><br>
-		
-		Username: <br>
-		<input type="text" name="username"><br>
-		
-		Password: <br>
-		<input type="password" name="password" id="password"/>	
-		
-		<input type="submit" value="Submit">
-
-	</form>
-
-
-	Not already registered ?
-	<a href="createAccount.html">Create an account !</a>
-	
-
-</body>
+	<div class="jumbotron text-center">
+		<h1>Online Meeting Planner</h1>
+		<p>Plan your meeting without hassle!</p>
+	</div>
+	<div class="container">
+		<h4>Login</h4>
+		<form action="login.php" method="post">
+			<div class="form-group">
+				Username:
+				<input type="text" class="form-control" placeholder="Enter username" name="username">
+			</div>
+			<div class="form-group">
+				Password: <br>
+				<input type="password" class="form-control" placeholder="Enter password" name="password" id="password"/>
+			</div>
+			<button type="submit" class="btn btn-default" value="Submit">Submit</button>
+		</form>
+		<br><br>
+		Not already registered?
+		<a href="createAccount.html">Create an account!</a>
+	</div>
 </body>
 
 </html>
