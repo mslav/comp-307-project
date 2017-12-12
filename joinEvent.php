@@ -13,7 +13,7 @@ $_SESSION['eventID'] = $code;
 
 $result = $conn->query("SELECT * FROM EVENTS WHERE id = $code");
 if($result->num_rows == 0) {
-     echo "Event not found";
+	 exit("Event not found");
 }
 
 
@@ -28,7 +28,7 @@ if ($a2->num_rows > 0 ){
 	$row1 = $a2->fetch_assoc();
 	$id1 = (int) $row1["id"];
 }else{
-	echo "failed";
+	echo "failed retreiving user id";
 }
 
 
@@ -41,7 +41,7 @@ if ($a2->num_rows > 0 ){
 	$row1 = $a2->fetch_assoc();
 	$idString = $row1["userslist"];
 }else{
-	echo "failed";
+	echo "failed to retreive users";
 }
 $idString = $idString . ";" . $id1;
 
@@ -57,7 +57,7 @@ if ($conn->query($sql) === TRUE and $conn->query($sql2) === TRUE) {
 	header('location: event.html');
 	
 } else {
-	echo "Error, try again later ";
+	echo "Event already joined";
 }
 
 $conn->close();

@@ -26,7 +26,7 @@ $newEmail = $_POST['email'];
 		VALUES ('$newName', '$newPassword', '$newEmail')";
 		
 		// add a table to store the events
-		$sql2 = "CREATE TABLE `{$newName}` (id INT(11), availableTime VARCHAR(60))";
+		$sql2 = "CREATE TABLE `{$newName}` (id INT(11) AUTO_INCREMENT PRIMARY KEY, availableTime VARCHAR(60))";
 		
 		// add a row to ATTEMPTS:
 		$sql3 = "INSERT INTO ATTEMPTS (username, number)
