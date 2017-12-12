@@ -33,7 +33,7 @@ print "\t\t<h1>Online Meeting Planner</h1>\n";
 print "\t\t<p>Plan your meeting without hassle!</p>\n";
 print "\t</div>\n";
 print "\t<div class='container'>\n";
-print "\t\t<h4>Create an account:</h4>\n";
+print "\t\t<h4>Create an account</h4>\n";
 print "\t\t<form action='../addUser.php' method='post'>\n";
 print "\t\t\t<div class='form-group'>\n";
 print "\t\t\t\tUsername:\n";
@@ -49,6 +49,9 @@ print "\t\t\t\t<input type='text' class='form-control' placeholder='Enter email'
 print "\t\t\t</div>\n";
 print "\t\t\t<button type='submit' class='btn btn-default' value='Submit'>Submit</button>\n";
 print "\t\t</form>\n";
+print "\t\t<br><br>\n";
+print "\t\tAlready registered?\n";
+print "\t\t<a href='../index.html'>Login!</a>\n";
 print "\t</div>\n";
 print "</body>\n\n";
 
