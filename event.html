@@ -42,6 +42,7 @@
 				string += user[i];
 			}
 			document.getElementById('hiddenField').value = string;
+			document.getElementById("hiddenField2").value = getParameterByName("eventName");
 			document.getElementById("myForm").submit();
 		}
 		// update user availability array and time table
@@ -60,10 +61,14 @@
 			}
 		}
 		
-		function updateEventCode() {
+		function updateEventNameAndCode() {
+			var eventName = getParameterByName("eventName");
+			document.getElementById("eventName").innerHTML = "Event " + eventName;
 			var eventCode = getParameterByName("eventCode");
 			document.getElementById("eventCode").innerHTML = eventCode;
-			document.getElementById("alertBanner").innerHTML = "<strong>Event joined!</strong> Indicate your availability by clicking on the time slot now.";
+			if (getParameterByName("joinEvent") === "true") {
+				document.getElementById("alertBanner").innerHTML = "<strong>Event joined!</strong> Indicate your availability by clicking on the time slot now.";
+			}
 		}
 		
 		function copyToClipboard(text) {
@@ -71,7 +76,7 @@
 		}
 		
 		$(function() {
-			updateEventCode();
+			updateEventNameAndCode();
 		});
 	</script>
 </head>
@@ -82,7 +87,7 @@
 		<p>Plan your meeting without hassle!</p>
 	</div>
 	<div class="container">
-		<h4>Make Event</h4>
+		<h4 id="eventName">Event</h4>
 		<div class="alert alert-success" id="alertBanner">
 			<strong>Event created!</strong> Indicate your availability by clicking on the time slot now.
 		</div>
@@ -155,6 +160,7 @@
 			<form action="updateTime.php" method="post">
 				<br>
 				<input type="hidden" id="hiddenField" name="userAvailability" value=""/>
+				<input type="hidden" id="hiddenField2" name="eName" value=""/>
 				<input type="submit" class="btn btn-default" value="Submit your availability" onmousedown="sendAvailability()">
 			</form>
 	</div>

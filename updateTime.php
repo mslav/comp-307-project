@@ -11,7 +11,8 @@ $user = $_SESSION['username'];
 $id = $_SESSION['eventID'];
 
 
-$times = $_POST['userAvailability'];  
+$times = $_POST['userAvailability'];
+$eName = $_POST['eName'];
 
 $sql2 = "UPDATE $user SET availableTime = '$times' WHERE id = '$id'";
 
@@ -48,7 +49,7 @@ if ($conn->query($sql2) === TRUE) {
 		<p>Plan your meeting without hassle!</p>
 	</div>
 	<div class="container">
-		<h4>Make Event</h4>
+		<h4>Event ' . $eName . '</h4>
 		<div class="alert alert-success">
 			<strong>Time set!</strong> Hooray.
 		</div>

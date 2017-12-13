@@ -85,15 +85,22 @@ if ($a2->num_rows > 0 ){
 $idString = $idString . ";" . $id1;
 
 
+$eventQuery = "SELECT name FROM EVENTS WHERE id = '$code'";
+$eventId = $conn->query($eventQuery);
+
+if ($eventId->num_rows > 0 ){
+	$row = $eventId->fetch_assoc();
+	$eName = $row["name"];
+}else{
+	echo "failed";
+}
+
+
 $sql2 = "UPDATE EVENTS SET userslist = '$idString' WHERE id = '$code'";
-
-
-
-
 $sql = "INSERT INTO $user (id) VALUES ('$code')";
 
 if ($conn->query($sql) === TRUE and $conn->query($sql2) === TRUE) {
-	header('location: event.html?eventCode=' . $code . '&joinEvent=true');
+	header('location: event.html?eventName=' . $eName . '&eventCode=' . $code . '&joinEvent=true');
 	
 } else {
 	echo '<!DOCTYPE html>

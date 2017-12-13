@@ -44,7 +44,7 @@ $sql2 = "INSERT INTO $user (id) VALUES ('$id')";
 
 
 if ($conn->query($sql2) === TRUE) {
-	header('location: event.html?eventCode=' . $id);
+	header('location: event.html?eventName=' . $newName . '&eventCode=' . $id);
 	
 } else {
 	echo "Error, try again later ";
