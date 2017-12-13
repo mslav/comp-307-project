@@ -11,6 +11,8 @@ $newName = $_POST['name'];
 $newDate = $_POST['date'];
 $user = $_SESSION['username'];
 
+$newName = $newName . ' on ' . $newDate;
+
 $a1 = "SELECT id FROM USERS WHERE username = '$user'";
 $a2 = $conn->query($a1);
 
