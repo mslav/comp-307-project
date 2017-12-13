@@ -93,7 +93,7 @@ $sql2 = "UPDATE EVENTS SET userslist = '$idString' WHERE id = '$code'";
 $sql = "INSERT INTO $user (id) VALUES ('$code')";
 
 if ($conn->query($sql) === TRUE and $conn->query($sql2) === TRUE) {
-	header('location: event.html');
+	header('location: event.html?eventCode=' . $code . '&joinEvent=true');
 	
 } else {
 	echo '<!DOCTYPE html>
